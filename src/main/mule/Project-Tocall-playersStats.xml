@@ -7,22 +7,22 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<flow name="Project-Tocall-playersStatsFlow" doc:id="853e6610-ea38-4500-9384-4126c250f785">
 		<http:request method="GET" doc:name="Request" doc:id="1811f93b-d6b0-49b6-a33f-fdd1cb80dfe2" config-ref="HTTP_Request_configuration" path="${Request.fantacyPath}">
-			<http:query-params ><![CDATA[#[output application/java
+			<http:query-params><![CDATA[#[output application/java
 ---
 {
 	"apikey" : "804ytInkdGZJPQCf0mBM9qoezLx2",
 	"unique_id" : "1034809"
 }]]]></http:query-params>
 		</http:request>
-		<ee:transform doc:name="Transform Message" doc:id="c8514667-9cc1-4440-befb-51f679a8198a" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
+		<ee:transform doc:name="Transform Message" doc:id="c8514667-9cc1-4440-befb-51f679a8198a">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<set-variable value="#[payload.squad.players[0].pid]" doc:name="Set Variable" doc:id="75403dae-08b0-4520-bf8e-cef4154fec28" variableName="pids"/>
+		<set-variable value="#[payload.squad.players[0].pid]" doc:name="Set Variable" doc:id="75403dae-08b0-4520-bf8e-cef4154fec28" variableName="pids" />
 		<ee:transform doc:name="Transform Message" doc:id="6b2cd0f3-b505-4904-8f07-2c03db139582">
 			<ee:message>
 			</ee:message>
@@ -47,7 +47,7 @@ output application/json
 			<ee:transform doc:name="Transform Message" doc:id="88737a78-8701-4fde-9624-0c3c5ec9602b">
 				<ee:message>
 					<ee:set-payload><![CDATA[%dw 2.0
-output application/json
+output application/json 
 ---
 {
 	"TimeStamp": now() >> "America/New_York",
@@ -55,27 +55,24 @@ output application/json
 	"Profile": payload.profile,
 	"PlayerStats": if (attributes.vars.path =="/api/playersInfo-ODI") payload.data.batting."ODIs" else if(attributes.vars.path =="/api/playersInfo-T20")payload.data.batting."T20Is" else payload.data.batting."tests"
 	
-}]]></ee:set-payload>
+}
+]]></ee:set-payload>
 				</ee:message>
 			</ee:transform>
 			<ee:transform doc:name="Transform Message" doc:id="b3cac6db-9573-44de-b306-778825e0842a">
 				<ee:message>
-					<ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-vars.forpay ++ payload]]></ee:set-payload>
 				</ee:message>
 				<ee:variables>
 					<ee:set-variable variableName="forpay"><![CDATA[%dw 2.0
 output application/json
 ---
-vars.forpay ++ payload]]></ee:set-variable>
+vars.forpay ++ payload ]]></ee:set-variable>
 				</ee:variables>
 			</ee:transform>
 		</foreach>
-		<ee:transform doc:name="Transform Message" doc:id="9b63da99-1ece-43d2-a07c-89c7e4b0ecb8" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
+		<ee:transform doc:name="Transform Message" doc:id="9b63da99-1ece-43d2-a07c-89c7e4b0ecb8">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 vars.forpay]]></ee:set-payload>
