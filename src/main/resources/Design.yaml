@@ -1,0 +1,11 @@
+http:
+  port: "8082"
+
+https:
+  port: "443"
+  host: "cricapi.com"
+  basepath: "/api"
+  
+Request:
+ fantacyPath: "/fantasySquad"
+ playerpath: "/playerStats" 

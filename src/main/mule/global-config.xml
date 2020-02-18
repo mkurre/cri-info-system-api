@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d3c5c49d-5542-4ff3-83ea-a2cb5bb284a2" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" connectionIdleTimeout="30000000"/>
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="e2ad13cc-cc88-4dfc-a706-9703a9315cbd" basePath="${https.basepath}" >
+		<http:request-connection host="${https.host}" port="${https.port}" protocol="HTTPS" connectionIdleTimeout="30000000">
+			<reconnection >
+				<reconnect-forever />
+			</reconnection>
+		</http:request-connection>
+	</http:request-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="a50bad57-e21f-4e38-bfbf-7baa771d507c" file="${env}.yaml" />
+	<global-property doc:name="Global Property" doc:id="32e67d90-8756-4595-b241-a195d1b8fc2f" name="env" value="Design" />
+</mule>
