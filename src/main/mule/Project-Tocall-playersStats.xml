@@ -49,14 +49,17 @@ output application/json
 					<ee:set-payload><![CDATA[%dw 2.0
 output application/json 
 ---
+player: 
 {
-	"TimeStamp": now() >> "America/New_York",
-	"Name": payload.name,
-	"Profile": payload.profile,
-	"PlayerStats": if (attributes.vars.path =="/api/playersInfo-ODI") payload.data.batting."ODIs" else if(attributes.vars.path =="/api/playersInfo-T20")payload.data.batting."T20Is" else payload.data.batting."tests"
-	
-}
-]]></ee:set-payload>
+	fullName: payload.fullName,
+	country: payload.country,
+	playingRole: payload.playingRole,
+	BattingStats:if (attributes.vars.path =="/api/playersInfo-ODI") payload.data.batting."ODIs" else if(attributes.vars.path =="/api/playersInfo-T20")payload.data.batting."T20Is" else payload.data.batting."tests",
+	BlowingStats: if (attributes.vars.path =="/api/playersInfo-ODI") payload.data.bowling."ODIs" else if(attributes.vars.path =="/api/playersInfo-T20")payload.data.bowling."T20Is" else payload.data.bowling."tests",
+	creditsLeft: payload.creditsLeft,
+	DOB:payload.born,
+	Age:payload.currentAge
+}]]></ee:set-payload>
 				</ee:message>
 			</ee:transform>
 			<ee:transform doc:name="Transform Message" doc:id="b3cac6db-9573-44de-b306-778825e0842a">
@@ -75,7 +78,21 @@ vars.forpay ++ payload ]]></ee:set-variable>
 				<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
-vars.forpay]]></ee:set-payload>
+{
+Players: vars.forpay.*player map  
+{
+	
+	Name:$.fullName,
+	Country:$.country,
+	Role:$.playingRole,
+	BatStats:$.BattingStats,
+	BowlStats:$.BlowingStats,
+	CreditsLeft:$.creditsLeft,
+	DOB:$.DOB,
+	PresentAge:$.Age
+} 
+
+}]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 	</flow>
@@ -110,13 +127,19 @@ payload]]></ee:set-payload>
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
-{
-	"TimeStamp": now() >> "America/New_York",
-	"Name": payload.name,
-	"Profile": payload.profile,
-	"PlayerRuns": "*T20sRuns:" ++ payload.data.batting.T20Is.Runs ++  "*ODIRuns:" ++ payload.data.batting.ODIs.Runs
-	
-}]]></ee:set-payload>
+
+Players: payload map (object, index)->
+ {
+	Name: object.name,
+	Age: object.currentAge,
+	DOB: object.born,
+	categroy: object.playingRole,
+	WicketsTaken: object.data.bowling.T20Is.Wkts,
+	TotalRuns: object.data.batting.T20Is.Runs
+ }
+
+
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 	</flow>
