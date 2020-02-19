@@ -144,6 +144,5 @@ Players: payload map (object, index)->
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<logger level="INFO" doc:name="Logger" doc:id="5217c710-ffde-4d8d-a2fa-6bed04f8491a" message="#[payload]"/>
 	</flow>
 </mule>
