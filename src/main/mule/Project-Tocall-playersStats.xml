@@ -48,14 +48,16 @@ output application/json
 				<ee:message>
 					<ee:set-payload><![CDATA[%dw 2.0
 output application/json 
+var Batting= if (attributes.vars.path =="/api/playersInfo-ODI") payload.data.batting."ODIs" else if(attributes.vars.path =="/api/playersInfo-T20")payload.data.batting."T20Is" else payload.data.batting."tests"
+var Bowling= if (attributes.vars.path =="/api/playersInfo-ODI") payload.data.bowling."ODIs" else if(attributes.vars.path =="/api/playersInfo-T20")payload.data.bowling."T20Is" else payload.data.bowling."tests"
 ---
 player: 
 {
 	fullName: payload.fullName,
 	country: payload.country,
 	playingRole: payload.playingRole,
-	BattingStats:if (attributes.vars.path =="/api/playersInfo-ODI") payload.data.batting."ODIs" else if(attributes.vars.path =="/api/playersInfo-T20")payload.data.batting."T20Is" else payload.data.batting."tests",
-	BlowingStats: if (attributes.vars.path =="/api/playersInfo-ODI") payload.data.bowling."ODIs" else if(attributes.vars.path =="/api/playersInfo-T20")payload.data.bowling."T20Is" else payload.data.bowling."tests",
+	BattingStats:Batting,
+	BlowingStats:Bowling, 
 	creditsLeft: payload.creditsLeft,
 	DOB:payload.born,
 	Age:payload.currentAge

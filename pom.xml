@@ -25,6 +25,24 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
+					<cloudHubDeployment>
+						<uri>https://anypoint.mulesoft.com</uri>
+						<muleVersion>${muleVersion}</muleVersion>
+						<username>pavan_990</username>
+						<password>Madhav@2020</password>
+						<applicationName>Jenkins-test</applicationName>
+						<environment>${env}</environment>
+						<workers>1</workers>
+						<objectStoreV2>true</objectStoreV2>
+						<workerType>Micro</workerType>
+						<region>us-west-2</region>
+						<businessGroup>Bus1</businessGroup>
+						<businessGroupId>93c652ed-a2af-4272-96de-e8d46b8e4dfb</businessGroupId>
+						<properties>
+						<anypoint.platform.client_id>2eacdff47bca4868b1dad73e48ed2b04</anypoint.platform.client_id>
+						<anypoint.platform.client_secret>9ecD64DFE2c94Ba0b5f9013121D0a2c9</anypoint.platform.client_secret>
+						</properties>
+					</cloudHubDeployment>
 				</configuration>
 			</plugin>
 		</plugins>
