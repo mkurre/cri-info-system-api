@@ -6,7 +6,7 @@
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d3c5c49d-5542-4ff3-83ea-a2cb5bb284a2" >
-		<http:listener-connection host="0.0.0.0" port="${http.port}" connectionIdleTimeout="30000000"/>
+		<http:listener-connection host="0.0.0.0" port="${http.port}" connectionIdleTimeout="90000000"/>
 	</http:listener-config>
 	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="e2ad13cc-cc88-4dfc-a706-9703a9315cbd" basePath="${https.basepath}" >
 		<http:request-connection host="${https.host}" port="${https.port}" protocol="HTTPS" connectionIdleTimeout="30000000">

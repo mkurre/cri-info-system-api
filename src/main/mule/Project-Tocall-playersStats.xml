@@ -44,26 +44,6 @@ output application/json
 	"pid" : vars.pid
 }]]]></http:query-params>
 			</http:request>
-			<ee:transform doc:name="Transform Message" doc:id="88737a78-8701-4fde-9624-0c3c5ec9602b">
-				<ee:message>
-					<ee:set-payload><![CDATA[%dw 2.0
-output application/json 
-var Batting= if (attributes.vars.path =="/api/playersInfo-ODI") payload.data.batting."ODIs" else if(attributes.vars.path =="/api/playersInfo-T20")payload.data.batting."T20Is" else payload.data.batting."tests"
-var Bowling= if (attributes.vars.path =="/api/playersInfo-ODI") payload.data.bowling."ODIs" else if(attributes.vars.path =="/api/playersInfo-T20")payload.data.bowling."T20Is" else payload.data.bowling."tests"
----
-player: 
-{
-	fullName: payload.fullName,
-	country: payload.country,
-	playingRole: payload.playingRole,
-	BattingStats:Batting,
-	BlowingStats:Bowling, 
-	creditsLeft: payload.creditsLeft,
-	DOB:payload.born,
-	Age:payload.currentAge
-}]]></ee:set-payload>
-				</ee:message>
-			</ee:transform>
 			<ee:transform doc:name="Transform Message" doc:id="b3cac6db-9573-44de-b306-778825e0842a">
 				<ee:message>
 				</ee:message>
@@ -81,10 +61,10 @@ vars.forpay ++ payload ]]></ee:set-variable>
 output application/json
 ---
 {
-Players: vars.forpay.*player map  
+PlayersInfo: vars.forpay.*player map  
 {
-	
 	Name:$.fullName,
+	Profile:$.History,
 	Country:$.country,
 	Role:$.playingRole,
 	BatStats:$.BattingStats,
@@ -92,6 +72,7 @@ Players: vars.forpay.*player map
 	CreditsLeft:$.creditsLeft,
 	DOB:$.DOB,
 	PresentAge:$.Age
+	
 } 
 
 }]]></ee:set-payload>
